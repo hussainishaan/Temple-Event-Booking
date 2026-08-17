@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Visit - Temple & Event Booking System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>🏛️ Temple & Event Booking</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Browse Events</a></li>
+                <li><a href="my-bookings.html">My Bookings</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="event-details.html" class="back-button">← Back to Event Details</a>
+
+        <div class="booking-form-section">
+            <h2>Complete Your Booking</h2>
+            
+            <div class="booking-summary" id="bookingSummary">
+                <!-- Booking details will be shown here -->
+            </div>
+
+            <form id="bookingForm" class="booking-form">
+                <div class="form-group">
+                    <label for="visitorName">Visitor Name *</label>
+                    <input type="text" id="visitorName" required placeholder="Enter your full name">
+                    <small id="visitorNameError" class="error"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" required placeholder="Enter your email">
+                    <small id="emailError" class="error"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" required placeholder="Enter your phone number">
+                    <small id="phoneError" class="error"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="numberOfVisitors">Number of Visitors *</label>
+                    <input type="number" id="numberOfVisitors" required min="1" max="50" placeholder="1">
+                    <small id="numberOfVisitorsError" class="error"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Additional Notes</label>
+                    <textarea id="notes" placeholder="Any special requirements or notes..."></textarea>
+                </div>
+
+                <div id="formError" class="error-message" style="display: none;"></div>
+                <div id="formSuccess" class="success-message" style="display: none;"></div>
+
+                <button type="submit" class="btn btn-primary btn-submit">Complete Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Temple & Event Booking System. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

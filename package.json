@@ -1,0 +1,20 @@
+{
+  "name": "event-booking-api",
+  "version": "1.0.0",
+  "description": "Express API for event booking system",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "express",
+    "event",
+    "booking",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
