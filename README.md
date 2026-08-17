@@ -1,15 +1,15 @@
 # Temple & Event Booking System
 
-A **simple, student-friendly** Temple/Event Booking System built with **only HTML, CSS, and JavaScript** using browser `localStorage` for data management. No backend server, no database connection - everything runs locally in the browser!
+A **comprehensive Temple/Event Booking System** built with **HTML, CSS, and JavaScript** frontend paired with a **Node.js Express backend API**. Features real-time data management, dynamic seat capacity tracking, and booking confirmations.
 
 ## What Makes This Project Special?
 
-✅ **Frontend Only** - HTML, CSS, JavaScript  
-✅ **No Backend** - No Python, Flask, or Node.js  
-✅ **No Database Connection** - Data stored in browser localStorage  
-✅ **No Server Setup** - Just open HTML files in browser  
-✅ **Easy to Understand** - Simple code, perfect for students  
-✅ **Works Offline** - Completely independent  
+✅ **Full-Stack Architecture** - Frontend (HTML, CSS, JS) + Backend (Node.js Express)  
+✅ **REST API Backend** - RESTful endpoints for events, sessions, and bookings  
+✅ **Real-Time Data** - Dynamic seat availability and capacity management  
+✅ **Professional Setup** - npm dependencies, scalable structure  
+✅ **Easy to Understand** - Clean code, well-organized for learners  
+✅ **Production-Ready** - Proper error handling and data validation  
 
 ## Project Files
 
@@ -20,7 +20,10 @@ project/
 ├── booking.html        # Booking form page
 ├── my-bookings.html    # View your bookings
 ├── styles.css          # CSS styling for all pages
-├── script.js           # JavaScript with localStorage
+├── script.js           # Frontend JavaScript
+├── server.js           # Express.js backend API
+├── package.json        # Node.js dependencies (Express)
+├── requirements.txt    # Python dependencies (optional)
 └── README.md           # This file
 ```
 
@@ -50,23 +53,54 @@ project/
 
 ## How to Run
 
-### Step 1: No Installation Needed! ✅
+### Option 1: With Backend Server (Recommended) ⭐
 
-Just open the `index.html` file in your web browser.
+**Prerequisites:**
+- Node.js installed (v14 or higher)
 
-**Options:**
-1. **Direct Open** - Right-click `index.html` → Open with Browser
-2. **Using Local Server** (Optional):
+**Steps:**
+1. Install dependencies:
    ```bash
-   python -m http.server 8000
+   npm install
    ```
-   Then visit `http://localhost:8000` in browser
 
-That's it! 🎉
+2. Start the backend server:
+   ```bash
+   npm start
+   ```
+   The API server will run on `http://localhost:3001`
 
-## Sample Data
+3. Open `index.html` in your browser
 
-The system comes with sample data automatically loaded into browser localStorage:
+### Option 2: Frontend Only (Quick Test)
+
+Just open the `index.html` file directly in your browser without running the server.
+
+**Note:** In frontend-only mode, the app uses browser localStorage instead of the API.
+
+## API Endpoints
+
+The Express backend provides the following REST API endpoints:
+
+### Events
+- `GET /api/events` - Get all events
+- `GET /api/events/:id` - Get event details
+
+### Sessions
+- `GET /api/sessions` - Get all sessions
+- `GET /api/sessions?eventId=:id` - Get sessions for specific event
+- `POST /api/sessions/:id/book` - Update session booking status
+
+### Bookings
+- `GET /api/bookings` - Get all bookings
+- `POST /api/bookings` - Create new booking
+- `GET /api/bookings/:id` - Get booking details
+- `DELETE /api/bookings/:id` - Cancel booking
+- `GET /api/bookings/search?email=:email` - Search bookings by email
+
+## How Data Works
+
+The system uses an **in-memory data store** with sample data initialized on server startup:
 
 ### Events:
 1. **Varanasi Temple** - Ancient temple, Capacity: 500
@@ -75,29 +109,14 @@ The system comes with sample data automatically loaded into browser localStorage
 
 ### Sessions:
 - Multiple date/time slots for each event
-- Capacity tracking and availability
-- Some pre-booked seats for demo
+- Real-time capacity tracking and availability
+- Bookable seats decremented on confirmation
 
-### Sample Bookings:
-- A few sample bookings to show the booking system works
-- Search by email to view
-
-## How Data Works (localStorage)
-
-### What is localStorage?
-- Browser feature to store data locally on user's computer
-- Data persists even after closing browser
-- Max ~5-10MB storage per website
-- No server needed, no internet required for demo
-
-### Data Structure:
-```javascript
-// Events stored as JSON array
-localStorage.getItem('events')
-// [{ id, name, description, location, capacity }, ...]
-
-// Sessions stored as JSON array
-localStorage.getItem('sessions')
+### Bookings:
+- Stored with visitor details, email, phone
+- Session and event references
+- Booking status tracking
+- Search functionality by email
 // [{ id, eventId, sessionDate, startTime, endTime, capacity, bookedSeats }, ...]
 
 // Bookings stored as JSON array
@@ -105,179 +124,127 @@ localStorage.getItem('bookings')
 // [{ id, eventId, sessionId, visitorName, email, phone, numberOfVisitors, status, notes, createdAt }, ...]
 ```
 
-### JavaScript Functions (in script.js):
-```javascript
-// Save data to localStorage
-localStorage.setItem('key', JSON.stringify(data))
+## Features
 
-// Get data from localStorage
-const data = JSON.parse(localStorage.getItem('key'))
+### For Visitors:
+- 🏛️ Browse all available events/temples
+- 📍 View event locations and capacities
+- 📅 Select available dates/sessions
+- ⏰ View session timings
+- 👥 Book for multiple visitors
+- 📝 Add special notes/requirements
+- ✉️ Search bookings by email
+- 🔍 View complete booking details
+- ❌ Cancel bookings
+- ✅ Real-time seat availability tracking
 
-// This is how all operations work - no server calls!
-```
+### Technical Features:
+- REST API architecture
+- Form validation (name, email, phone, visitors)
+- Real-time seat availability tracking
+- Automatic capacity management
+- Booking status tracking
+- Search and filter functionality
+- Responsive mobile design
+- Error and success messages
 
 ## Testing the Application
 
-### Test 1: Browse Events
-1. Open `index.html`
+### Test 1: Check API Status
+1. Start the server: `npm start`
+2. Visit `http://localhost:3001` in browser
+3. Should see "Temple & Event Booking API is running"
+
+### Test 2: Browse Events
+1. Open `index.html` in browser
 2. See 3 sample events displayed
 3. Click "View & Book" on any event
 
-### Test 2: View Sessions
+### Test 3: View Sessions
 1. On event details page
 2. See available sessions with dates/times
 3. See seat availability
 
-### Test 3: Make a Booking
+### Test 4: Make a Booking
 1. Click "Book Now" on a session
-2. Fill booking form
+2. Fill booking form with details
 3. Complete booking
-4. See confirmation with booking ID
+4. See confirmation
 
-### Test 4: View Your Bookings
+### Test 5: View Your Bookings
 1. Go to "My Bookings" page
 2. Enter your email used during booking
 3. Click "Search Bookings"
-4. See all your bookings
-5. Click "View Details" to see full info
-6. Click "Cancel" to cancel booking
+4. See all your bookings with details
+5. Cancel bookings as needed
 
-### Test 5: Verify Data Persistence
-1. Make a booking
-2. Close browser completely
-3. Open `index.html` again
-4. Go to "My Bookings"
-5. Your booking is still there! ✅
+## Backend Architecture
 
-## Browser's Developer Tools - Check localStorage
+### Server Setup:
+- **Framework:** Express.js (Node.js)
+- **Port:** 3001
+- **API Format:** JSON REST
+- **Data Store:** In-memory (can be extended to database)
 
-Press `F12` in browser to open DevTools:
-
-1. Go to **Application** tab
-2. Click **Local Storage**
-3. Click website URL
-4. See stored events, sessions, and bookings as JSON
-
-This shows exactly where and how data is stored!
-
-## Validation Rules Explained
-
-### Booking Form Validation:
+### Data Models:
 ```javascript
-// Name: Cannot be empty
-// Email: Must have @ and . format
-// Phone: At least 10 digits required
-// Visitors: Between 1-50, cannot exceed available seats
+Event: { id, name, description, location, capacity }
+Session: { id, eventId, sessionDate, startTime, endTime, capacity, bookedSeats }
+Booking: { id, eventId, sessionId, visitorName, email, phone, numberOfVisitors, status, notes }
 ```
 
-### Session Capacity:
-```javascript
-Available Seats = Session Capacity - Booked Seats
-// If booking exceeds available seats → Error shown
-// When booking confirmed → Booked seats updated
-// When booking cancelled → Booked seats decreased
-```
+## Technology Stack
 
-## Code Structure (script.js)
+**Frontend:**
+- HTML5
+- CSS3 (Flexbox, Grid, Responsive)
+- Vanilla JavaScript (ES6+)
 
-### 1. localStorage Functions (Lines 1-150)
-- `initializeLocalStorage()` - Create sample data
-- `getEvents()`, `getEventById()` - Retrieve events
-- `getSessionsByEventId()` - Get sessions for event
-- `getAllBookings()`, `getBookingsByEmail()` - Retrieve bookings
-- `createBooking()` - Add new booking
-- `cancelBooking()` - Cancel booking
+**Backend:**
+- Node.js
+- Express.js
+- REST API
 
-### 2. Utility Functions (Lines 151-250)
-- `formatDate()`, `formatTime()` - Format display
-- `validateEmail()`, `validatePhone()` - Validation
-- `showError()`, `hideError()` - UI feedback
-- `getQueryParam()` - Get URL parameters
+**Optional:**
+- Flask (included in requirements.txt, not currently used)
 
-### 3. Page Functions (Lines 251-end)
-- `loadEventsPage()` - Load events with search
-- `loadEventDetailsPage()` - Show event & sessions
-- `loadBookingPage()` - Show booking form
-- `initializeMyBookingsPage()` - Manage bookings
-
-### 4. Event Listeners (At end)
-- Form submit, button clicks
-- Search functionality
-- Modal open/close
-
-## What Student Learns
+## What You Learn
 
 ### Frontend Concepts:
-- ✅ HTML form elements and structure
+- ✅ HTML structure and semantic markup
 - ✅ CSS Grid, Flexbox, Responsive Design
 - ✅ JavaScript DOM manipulation
-- ✅ Event listeners (click, submit, keypress)
+- ✅ Fetch API for backend communication
 - ✅ Form validation and error handling
 
-### Data Management:
-- ✅ JSON data format
-- ✅ Array methods (map, filter, find)
-- ✅ Object manipulation
-- ✅ Client-side data storage
+### Backend Concepts:
+- ✅ Express.js routing and middleware
+- ✅ RESTful API design
+- ✅ JSON data handling
+- ✅ Server-side logic
 
-### Best Practices:
-- ✅ Function organization
-- ✅ Code reusability
-- ✅ User feedback (success/error messages)
-- ✅ Mobile-responsive design
+### Full-Stack Development:
+- ✅ Client-server architecture
+- ✅ HTTP requests and responses
+- ✅ Data flow between frontend and backend
+- ✅ Error handling across layers
 
-## Important Notes for Teacher Explanation
+## Project Highlights
 
-1. **No Backend Needed** - Everything runs in browser
-2. **localStorage is Limited** - For demo/learning only
-3. **No Real Persistence** - Data lost if localStorage cleared
-4. **Real Projects** - Would use actual database with server
+- **Professional Structure:** Proper separation of frontend and backend
+- **Scalable Design:** Easy to extend with database later
+- **Real-World Patterns:** Follows REST API conventions
+- **Learning Tool:** Demonstrates full-stack concepts
+- **Easy to Deploy:** Can be hosted on Node.js platforms
 
-## Real-World Next Steps
+## Next Steps to Enhance
 
-After understanding this project, students can learn:
-- Backend development (Python/Flask, Node.js)
-- Database design (SQLite, MySQL, MongoDB)
-- API development (REST endpoints)
-- Server deployment
-
-## Troubleshooting
-
-### Bookings not saving?
-- Check if localStorage is enabled in browser
-- DevTools → Application → Local Storage (should exist)
-- If cleared, restart project
-
-### Can't see booked sessions?
-- Open browser DevTools (F12)
-- Check Local Storage for 'sessions' data
-- Make sure sessions have `bookedSeats` value
-
-### Styling looks broken?
-- Make sure `styles.css` is in same folder as HTML
-- Hard refresh browser (Ctrl+Shift+R)
-
-## Clear All Data
-
-To reset and start fresh:
-1. Open DevTools (F12)
-2. Application → Local Storage
-3. Right-click website URL → Clear
-4. Refresh page
-
-Sample data will reload automatically!
-
-## Author's Notes
-
-This project demonstrates:
-✅ Complete frontend development workflow
-✅ Data management without backend
-✅ Professional UI/UX design
-✅ Form validation and error handling
-✅ Responsive web design
-✅ JavaScript programming fundamentals
-
-Perfect for students to understand web development concepts before diving into backend technologies!
+1. Replace in-memory storage with a real database (MongoDB, PostgreSQL)
+2. Add user authentication (login/signup)
+3. Add email notifications for bookings
+4. Add admin dashboard for event management
+5. Implement payment integration
+6. Deploy to cloud platforms (Heroku, Vercel, AWS)
 
 ---
 
